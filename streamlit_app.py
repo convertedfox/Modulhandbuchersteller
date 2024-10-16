@@ -40,6 +40,7 @@ def excel_to_word(excel_file, template_file):
     
     return doc_bytes, file_name
 
+st.image('./dhbw_cas_logo.jpg')
 st.title("Modulhandbuchersteller für das DHBW CAS mit Vorlagenunterstützung")
 
 uploaded_excel = st.file_uploader("Wählen Sie eine Excel-Datei aus", type="xlsx")
