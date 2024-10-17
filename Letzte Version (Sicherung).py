@@ -100,10 +100,9 @@ def main():
 
     uploaded_excel = st.file_uploader("Wählen Sie eine Excel-Datei aus", type="xlsx")
     vorlage_verwenden = st.checkbox("Standardvorlage verwenden",True)
-    if vorlage_verwenden == True:
-        uploaded_template = ("/workspaces/Modulhandbuchersteller/Vorlage_Modulhandbuch_20241017.docx")
-    else:
-        uploaded_template = st.file_uploader("Wählen Sie eine Word-Vorlage aus", type="docx")
+    if vorlage_verwenden == true:
+        
+    uploaded_template = st.file_uploader("Wählen Sie eine Word-Vorlage aus", type="docx")
 
     if uploaded_excel and uploaded_template:
         if st.button("Konvertieren"):
@@ -120,7 +119,7 @@ def main():
                 st.error(f"Ein Fehler ist aufgetreten: {str(e)}")
                 st.error("Bitte stellen Sie sicher, dass die hochgeladenen Dateien gültig sind und das erwartete Format haben.")
     elif uploaded_excel or uploaded_template:
-        st.warning("Bitte laden Sie sowohl eine Excel-Datei als auch eine Word-Vorlage hoch (oder verwenden die Standart-Vorlage).")
+        st.warning("Bitte laden Sie sowohl eine Excel-Datei als auch eine Word-Vorlage hoch.")
 
 if __name__ == "__main__":
     main()
