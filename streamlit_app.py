@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 from docx import Document
-from docx.shared import Pt
+from docx.shared import Pt, Inches, RGBColor
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 import io
 from typing import Dict, Any
@@ -11,25 +11,53 @@ def add_formatted_section(document: Document, data: Dict[str, Any], alter_studie
     if alter_studiengang != data["Studiengang"]:
         studiengang = document.add_heading(data["Studiengang"], level=0)
         studiengang.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
-        studiengang.runs[0].font.size = Pt(16)
+        studiengang.runs[0].font.size = Pt(22)
+        try:
+            studiengang.style = document.styles["Header_Studiengang"]
+        except KeyError:
+            pass
         alter_studiengang = data["Studiengang"]
     
+    # Modultitel
     title = document.add_heading(str(data['Modultitel']), level=1)
     title.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
-    title.runs[0].font.size = Pt(14)
+    title.runs[0].font.size = Pt(20)
+
 
     subtitle = document.add_paragraph(f"{data['Modulcode']} - ECTS: {data['Credits']}")
     subtitle.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
     subtitle.runs[0].italic = True
-    subtitle.runs[0].font.size = Pt(12)
+    subtitle.runs[0].font.size = Pt(11)
+    # Fügen Sie eine Leerzeile hinzu
+    document.add_paragraph()
 
     for section in ['Kompetenzbeschreibung – Kurzform', 'Lehrinhalte']:
-        heading = document.add_paragraph(f"{section}:", style='Heading 2')
-        heading.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
-        document.add_paragraph(str(data[section]))
-
-    link_heading = document.add_paragraph("Internet-Link mit Detailbeschreibung und Terminen:", style='Heading 2')
+        heading = document.add_paragraph()
+        heading_run = heading.add_run(f"{section}:")
+        font = heading_run.font
+        font.name = 'Arial'
+        font.size = Pt(11)
+        font.italic = True
+        font.color.rgb = RGBColor(255, 0, 0)  # Rot  
+        heading_run.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
+        document.add_paragraph() #Leerzeile
+        inhalt = document.add_paragraph()
+        inhalt_run = inhalt.add_run(str(data[section]))
+        font = inhalt_run.font
+        font.size = Pt(10)
+        document.add_paragraph()
+  
+    
+    link_heading = document.add_paragraph()
+    link_heading_run = link_heading.add_run("Internet-Link mit Detailbeschreibung und Terminen:")
+    font = link_heading_run.font
+    font.name = 'Arial'
+    font.size = Pt(10)
+    font.italic = True
+    font.color.rgb = RGBColor(255, 0, 0)  # Rot
     link_heading.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
+    document.add_paragraph()
+
     link = document.add_paragraph()
     link.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
     hyperlink = link.add_run(str(data['Link']))
@@ -67,7 +95,7 @@ def main():
     2. Laden Sie eine Word-Vorlage für das Modulhandbuch hoch.
     3. Klicken Sie auf 'Konvertieren', um das Modulhandbuch zu erstellen.
     
-    **Hinweis:** Die Excel-Datei sollte folgende Spalten enthalten: Studiengang, Modultitel, Modulcode, Credits, Kompetenzbeschreibung – Kurzform, Lehrinhalte, Link
+    **Hinweis:** Die Excel-Datei sollte folgende Spalten in dieser Reihenfolge und mit dieser Benamung enthalten: Studiengang, Modultitel, Modulcode, Credits, Kompetenzbeschreibung – Kurzform, Lehrinhalte, Link
     """)
 
     uploaded_excel = st.file_uploader("Wählen Sie eine Excel-Datei aus", type="xlsx")
