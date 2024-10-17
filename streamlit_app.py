@@ -106,12 +106,12 @@ def main():
         uploaded_excel = st.file_uploader("Wählen Sie eine Excel-Datei aus", type="xlsx")
     else:
         st.markdown("Folgende Tabelle wird benutzt:")
-        uploaded_excel = ("/workspaces/Modulhandbuchersteller/Demodatei.xlsx")
+        uploaded_excel = ("./Demodatei.xlsx")
         st.dataframe(excel_to_dict(uploaded_excel))
     
     vorlage_verwenden = st.checkbox("Word-Standardvorlage verwenden",True)
     if vorlage_verwenden == True:
-        uploaded_template = ("/workspaces/Modulhandbuchersteller/Vorlage_Modulhandbuch_20241017.docx")
+        uploaded_template = ("./Vorlage_Modulhandbuch_20241017.docx")
     else:
         uploaded_template = st.file_uploader("Wählen Sie eine Word-Vorlage aus", type="docx")
 
