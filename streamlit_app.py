@@ -96,10 +96,18 @@ def main():
     3. Klicken Sie auf 'Konvertieren', um das Modulhandbuch zu erstellen.
     
     **Hinweis:** Die Excel-Datei sollte folgende Spalten in dieser Reihenfolge und mit dieser Benamung enthalten: Studiengang, Modultitel, Modulcode, Credits, Kompetenzbeschreibung – Kurzform, Lehrinhalte, Link
+    
+    ### Modus
+    Im Demo-Modus wird mit einer vorgefertigten Liste gearbeitet; um das Modulhandbuch schnell zu erzeugen.
+    Im Standardmodus kann eigene Liste hochgeladen werden.        
     """)
-
-    uploaded_excel = st.file_uploader("Wählen Sie eine Excel-Datei aus", type="xlsx")
-    vorlage_verwenden = st.checkbox("Standardvorlage verwenden",True)
+    modus = st.radio('Welcher Modus?', ['Standart','Demo'])
+    if modus == "Standart":
+        uploaded_excel = st.file_uploader("Wählen Sie eine Excel-Datei aus", type="xlsx")
+    else:
+        uploaded_excel = ("/workspaces/Modulhandbuchersteller/Demodatei.xlsx")
+    
+    vorlage_verwenden = st.checkbox("Word-Standardvorlage verwenden",True)
     if vorlage_verwenden == True:
         uploaded_template = ("/workspaces/Modulhandbuchersteller/Vorlage_Modulhandbuch_20241017.docx")
     else:
