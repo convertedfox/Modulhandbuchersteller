@@ -98,8 +98,8 @@ def main():
     **Hinweis:** Die Excel-Datei sollte folgende Spalten in dieser Reihenfolge und mit dieser Benamung enthalten: Studiengang, Modultitel, Modulcode, Credits, Kompetenzbeschreibung – Kurzform, Lehrinhalte, Link
     
     ### Modus
-    Im Demo-Modus wird mit einer vorgefertigten Liste gearbeitet; um das Modulhandbuch schnell zu erzeugen.
-    Im Standardmodus kann eigene Liste hochgeladen werden.        
+    Im Standardmodus kann eine eigene Liste hochgeladen werden.
+    Im Demo-Modus wird mit einer vorgefertigten Liste gearbeitet; um das Modulhandbuch schnell zu erzeugen.        
     """)
     modus = st.radio('Welcher Modus?', ['Standart','Demo'])
     if modus == "Standart":
